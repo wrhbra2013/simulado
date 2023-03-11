@@ -1,4 +1,14 @@
-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
+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
 
-Cut and copy token above
-Expires on Thu, Feb 29 2024. 
+#copy de token above in git with user: wrhbra2013
+Expires on Fri, Dec 29 2023.
+
+#commands layout
+
+$git init
+$git add .
+$git commit -m "<comentario>"
+$git push -u origin main
+
+Username for 'https://github.com': wrhbra2013
+Password for 'https://wrhbra2013@github.com': 

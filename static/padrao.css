@@ -1,18 +1,22 @@
-body {
-    background-color: aquamarine;
-
+html{
+    background-color: rgba(47, 185, 185, 0.705);
+    background-repeat: no-repeat, no-repeat;
+    background-size: 100%;
+    overflow-y: auto;
 }
 div.container {
+    scrollbar-width: 1px;
     max-width: 500px;
     margin: 100px auto;
-    border: 20px solid white;
+    border: 1px solid black;
+    border-radius: 30px;
     padding: 10px;
     text-align: center;
-}
+    }
 
 img{
     margin-top: 0 auto;
-    max-width: 400px;
-    max-height: 300px;
-
+    max-width: 500px;
+    max-height: 400px;
+  
 }

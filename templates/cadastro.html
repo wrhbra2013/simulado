@@ -11,15 +11,19 @@
 </head>
 
 <body>
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+       {% endfor %}
+
     <div class="container">
-        <h1> Esta é a tela de Cadastro!</h1>
-        <form action="/cadastro" class="container" method="post">
+        <h1> Novo Cadastro!</h1>
+        <form action="cadastro" class="container" method="post">
             <h1>Simulado da Prova Brasil</h1>
            <label>Instituição:</label>
            <input type="text" id="inst" name="inst" />
            <br>
            <label>Nome</label>
-           <input type="text" id="nome" />
+           <input type="text" id="nome" name="nome"/>
            <br>
            <label>Série escolar:</label>
            <input type="number" id="serie" name="serie" />

@@ -1,7 +1,8 @@
-html{
+body{
     background-color: rgba(47, 185, 185, 0.705);
     background-repeat: no-repeat, no-repeat;
     background-size: 100%;
+    display:block;
     overflow-y: auto;
         }
 div.container {
@@ -12,11 +13,27 @@ div.container {
     border-radius: 30px;
     padding: 10px;
     text-align: center;
+    display:block;
     }
 
-img{
-    margin-top: 0 auto;
-    max-width: 500px;
-    max-height: 400px;
-  
+
+
+img{    
+    max-width: auto;
+    max-height: auto;  
+}
+input{
+    
+    display: inline;
+
+}
+label{
+    text-align: center;
+    display:block;
+    background-color: auto;
+}
+p{
+    border: 1px solid black;    
+    text-align: center;
+    
 }

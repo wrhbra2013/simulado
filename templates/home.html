@@ -9,6 +9,11 @@
     <title>Avaliação</title>
 </head>
 <body>
+    <!-- Mensagem -->
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+       {% endfor %}
+
     <div class="container">
         <h1>MATEMÁTICA 4a SÉRIE / 5o ANO – BLOCO 01 </h1>
         <p> 01

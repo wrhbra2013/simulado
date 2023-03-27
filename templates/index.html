@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/static/ico/favicon.png"/>
+    <link rel="icon" type="image/png" href="/static/ico/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/static/padrao.css">
     <title>Revisando A PROVA BRASIL</title>
 </head>
+
 <body>
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+       {% endfor %}
+
+    
+
+    <div class="container">
+        <form  action="" method="POST">
+            <h1>Simulado da Prova Brasil</h1>
+            <label>Instituição:</label>
+            <input type="text" id="inst" name="inst" />
+            <br>
+            <label>Nome</label>
+            <input type="text" id="nome" name="nome" />
+            <br>
+            <label>Série escolar:</label>
+            <input type="number" id="serie" name="serie" />
+            <br>
+            <hr>
+            <button type="submit">Enviar</button>
+
+        </form>
+        <hr>
+   
+
+
+    </div>
+
     <div class="container">
         <img src="/static/infografico.gif">
     </div>
-    <div class="container">
-        <form action="/cadastro" class="container" method="post">
-            <h1>Simulado da Prova Brasil</h1>
-           <label>Instituição:</label>
-           <input type="text" id="inst" name="inst" />
-           <br>
-           <label>Nome</label>
-           <input type="text" id="nome" />
-           <br>
-           <label>Série escolar:</label>
-           <input type="number" id="serie" name="serie" />
-           <br><hr>
-           <button type="submit">Enviar</button>           
-       
-           </form>
-           <hr>
-           <a href="/cadastro">Novo Cadastro</a>
-           
-    
-       </div>
-   
-   
+
+
 </body>
+
 </html>

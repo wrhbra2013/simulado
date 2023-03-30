@@ -10,7 +10,7 @@ $git push -u origin main
 Username for 'https://github.com': wrhbra2013
 Password for 'https://wrhbra2013@github.com':
 
-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
+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
 
 #copy de token above in git with user: wrhbra2013
 Expires on Fri, Apr 28 2023.

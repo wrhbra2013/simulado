@@ -2,12 +2,14 @@
 from flask import Flask, render_template, request, redirect,url_for, flash
 from sqlalchemy import create_engine
 
+
 #cabeçalho Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY']='simulado'
 
 #Realizar Operações no banco
 sql = create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
+
 
 
 
@@ -25,16 +27,19 @@ def boas_vindas():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
+            pesquisa = sql.execute(f"SELECT inst,nome,ano FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
             print(pesquisa)
-            resultado = pesquisa.fetchone()
+            
 
-            if resultado == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
-                         
+            if pesquisa == None:
+                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')                                
+                          
 
         except Exception:
             flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')
+        finally:
+             return render_template('home.html')
+
             
         
      
@@ -55,16 +60,21 @@ def index():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
+            pesquisa = sql.execute(f"SELECT inst, nome, ano FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
             print(pesquisa)
-            resultado = pesquisa.fetchone()
+            
 
-            if resultado == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
+            if pesquisa == None:
+                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')                      
+                            
                          
 
-        except Exception:
-            flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')       
+        except Exception as e:
+            print(e)
+            flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')  
+        finally: 
+            return render_template('home.html')
+
      
      return render_template('index.html')
 

@@ -15,3 +15,15 @@ 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
 #copy de token above in git with user: wrhbra2013
 Expires on Fri, Apr 28 2023.
 
+…or create a new repository on the command line
+echo "# javascript_certification" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/wrhbra2013/javascript_certification.git
+git push -u origin main
+…or push an existing repository from the command line
+git remote add origin https://github.com/wrhbra2013/javascript_certification.git
+git branch -M main
+git push -u origin main

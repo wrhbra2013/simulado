@@ -8,9 +8,8 @@ $git push -u origin main
 
 #OUTPUT
 Username for 'https://github.com': wrhbra2013
-Password for 'https://wrhbra2013@github.com':
-
-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
+Password for 'https://wrhbra2013@github.com'
+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
 
 #copy de token above in git with user: wrhbra2013
 Expires on Fri, Apr 28 2023.

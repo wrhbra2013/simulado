@@ -1,22 +1,23 @@
 header{
-    max-width: 500px;
-    margin: 100px auto;
+    background-image: url('/static/view.jpg');
     border: 1px solid black;
     padding: 10px;
-    text-align: right;        
+    text-align: right; 
+    position: flex;       
     }
 
 
 
 body{
-    background-color: rgba(215, 228, 228, 0.975);
-    background-repeat: no-repeat, no-repeat;
-    background-size: 100%;
+    background-image: url('/static/view.jpg');
+    background-size: auto;
     overflow-y: auto;
-    display:block;
+    display:inline;
     position:flex;
-        }
+    }
+
 div.container {
+    color: aliceblue;
     overflow-y: auto;
     max-width: 500px;
     margin: 30px auto;
@@ -29,10 +30,7 @@ div.container {
 
 
 
-img{    
-    max-width: auto;
-    max-height: auto;  
-}
+
 input{
     
     display: inline;
@@ -48,12 +46,21 @@ p{
     font-family: Arial, Helvetica, sans-serif; 
     font-size: medium;
     text-align: center;
+    color: yellow;
         
+}
+h2{
+    font-family: Arial, Helvetica, sans-serif; 
+    font-size: medium;
+    text-align: center;
+    color: white;
 }
 .menu{
     padding: 10px;
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 50px;
+    max-height: 50px;
+    color: aliceblue;
+    
     display:inline;
                
     }
@@ -61,14 +68,25 @@ p{
     padding: 5px;
     border: 1px solid black;
     border-radius: 10px;
+    color: aliceblue;
+    
         
 }
-.img{
- padding-left: 50px;
+
+
+.titulo{
+    text-align: left;
+    font-style: italic;
+    display: block;
+    color: aliceblue;
+
+}
+table,tbody{
+       
+    display: inline;
+
 }
 
-span{
-    text-align: left;
-}
+
 
 

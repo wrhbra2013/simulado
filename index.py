@@ -2,14 +2,18 @@
 from flask import Flask, render_template, request, redirect,url_for, flash
 from sqlalchemy import create_engine
 
+#Configurar Banco de Dados Postgresql
+def conexao():  
+  global psql 
+  psql = create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
+  return psql
+
+#Instanciar função
+sql = conexao()
 
 #cabeçalho Flask app
 app = Flask(__name__)
 app.config['SECRET_KEY']='simulado'
-
-#Realizar Operações no banco
-sql = create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
-
 
 
 
@@ -27,18 +31,21 @@ def boas_vindas():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            pesquisa = sql.execute(f"SELECT inst,nome,ano FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
+            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
             print(pesquisa)
             
 
             if pesquisa == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')                                
+                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
+            else:
+                return render_template('home.html')
+
                           
 
         except Exception:
             flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')
-        finally:
-             return render_template('home.html')
+        
+             
 
             
         
@@ -60,20 +67,21 @@ def index():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            pesquisa = sql.execute(f"SELECT inst, nome, ano FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
+            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
             print(pesquisa)
             
 
             if pesquisa == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')                      
+                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
+            else:                
+                return render_template('home.html')                      
                             
                          
 
         except Exception as e:
             print(e)
             flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')  
-        finally: 
-            return render_template('home.html')
+        
 
      
      return render_template('index.html')
@@ -121,4 +129,4 @@ def sobre():
 
 
 if __name__=="main":
-    app.run()
+    app.run(host = '127.0.0.1', port = 4000)

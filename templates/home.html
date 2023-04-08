@@ -9,14 +9,14 @@
     <title>Gabarito</title>
 </head>
 <header>
-    <a class="titulo" href="home"> 
+    <a class="titulo" href="index">
         <img class="titulo" src="/static/ico/favicon-16x16.png">SIMULADO PROVA BRASIL</img>
-      </a>
-     <div class="menu">
-          
-      <a class="link" href="index">Home</a>
-      <a class="link" href="cadastro">Cadastro</a>
-      <a class="link" href="sobre">O Projeto</a>
+    </a>
+    <div class="menu">
+        <a class="link" href="index">Home</a>
+        <a class="link" href="cadastro">Novo usuário</a>
+        <a class="link" href="questoes">Nova questão</a>
+        <a class="link" href="sobre">O Projeto</a>
     </div>
 </header>
 <body>
@@ -26,26 +26,24 @@
        {% endfor %}
 
     <div class="container">
-        <form action="/gabarito" method="POST">
-        <h1>MATEMÁTICA 4a SÉRIE / 5o ANO – BLOCO 01 </h1>
-        <h2> 01
-            IT_038252
-           João participou de um campeonato de judô na
-           categoria juvenil, pesando 45,350kg. Cinco
-           meses depois estava 3,150kg mais pesado e
-           precisou mudar de categoria. Quanto ele estava
-           pesando nesse período?
-        </h2>
-             <input type="radio" id="A" name="A" value="14,250kg">
-           <label for="14,250kg">(A) 14,250kg</label><br>
+        {%for result in results%}
+        <h2>{{result[1]}}</h2>
+        <h2>{{result[2]}}</h2>
+        <h2>{{result[3]}}</h2>
+        <form action="/gabarito" method="POST">       
+           <input type="radio" id="A" name="A" value="14,250kg">
+           <label for="A">(A) <h2>{{result[4]}}</h2></label><br>
            <input type="radio" id="B" name="B" value="40,850kg">
-           <label for="40,850kg">(B) 40,850kg</label><br>
+           <label for="B">(B) <h2>{{result[5]}}</h2></label><br>
            <input type="radio" id="C" name="C" value="48,500kg">
-           <label for="48,500kg">(C) 48,500kg</label><br>
+           <label for="C">(C) <h2>{{result[6]}}</h2></label><br>
            <input type="radio" id="D" name="D" value="76,450kg">
-           <label for="76,450kg">(D) 76,450kg</label>
-
+           <label for="D">(D) <h2>{{result[7]}}</h2></label>
+           <input type="radio" id="E" name="E" value="76,450kg">
+           <label for="E">(E) <h2>{{result[8]}}</h2></label>
            <button type="submit"> Enviar </button>
+           {%endfor%}
+       
         </form>       
     </div>
     

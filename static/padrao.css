@@ -81,12 +81,17 @@ h2{
     color: aliceblue;
 
 }
+
+.questoes{
+    text-align: center;
+    font-style: italic;
+    display: block;
+    color: aliceblue;
+    }
+
 table,tbody{
        
     display: inline;
 
 }
-
-
-
 

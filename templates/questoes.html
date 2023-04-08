@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/ico/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/static/padrao.css">
-
-    <title>SIMULADO PROVA BRASIL</title>
+    <title>Cadastrar Novas Questões</title>
 </head>
 <header>
     <a class="titulo" href="index">
@@ -20,36 +19,44 @@
         <a class="link" href="questoes">Nova questão</a>
         <a class="link" href="sobre">O Projeto</a>
     </div>
+
 </header>
 
 <body>
     {% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
     {% endfor %}
-
-
-
     <div class="container">
-        <form action="" method="POST">
-
-            <label>Instituição:</label>
-            <input type="text" id="inst" name="inst" />
+        <form action="questoes" class="questoes" method="POST">
+            <label>Titulo</label>
+            <input type="text" id="title" name="title" />
             <br>
-            <label>Nome</label>
-            <input type="text" id="nome" name="nome" />
+            <label>Enunciado</label>
+            <input type="text" id="enunciate" name="enunciate" />
             <br>
-            <label>Série escolar:</label>
-            <input type="number" id="serie" name="serie" />
+            <label>Imagem</label>
+            <input type="file" id="picture" name="picture" accept="imagem/png,imagem/jpeg,imagem/jpg" autocomplete="off" />
             <br>
-            <hr>
+            <label>A</label>
+            <input type="text" id="a" name="a" />
+            <br>
+            <label>B</label>
+            <input type="text" id="b" name="b" />
+            <br>
+            <label>C</label>
+            <input type="text" id="c" name="c" />
+            <br>
+            <label>D</label>
+            <input type="text" id="d" name="d" />
+            <br>
+            <label>E</label>
+            <input type="text" id="e" name="e" />
+            <br><hr>
             <button type="submit">Enviar</button>
-
         </form>
-
     </div>
 
 
-    <script src="/static/js/acessibilidade.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,25 @@
+
+DROP TABLE IF EXISTS estudante;
+DROP TABLE IF EXISTS questoes;
+
+
+CREATE TABLE estudante 
+(id serial PRIMARY KEY,
+inst VARCHAR(50) NOT NULL,
+nome VARCHAR(50) NOT NULL ,
+serie INT NOT NULL);
+  
+
+CREATE TABLE questoes 
+(id serial PRIMARY KEY, 
+titulo VARCHAR  NOT NULL, 
+enunciado VARCHAR(10000) NOT NULL, 
+imagem BYTEA, 
+a VARCHAR NOT NULL ,
+b VARCHAR NOT NULL ,
+c VARCHAR NOT NULL ,
+d VARCHAR NOT NULL ,
+e VARCHAR NOT NULL 
+);
+
+

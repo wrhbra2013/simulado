@@ -1,27 +1,30 @@
 # Módulos
 from flask import Flask, render_template, request, redirect,url_for, flash,session
-from init_db import conn, cur
+import os as os
 from werkzeug.utils import secure_filename
-import os 
+from sqlalchemy import create_engine
+from sqlalchemy.pool import NullPool
 
+#Configurar Banco de Dados Postgresql
+def conexao():  
+  global psql 
+  psql = create_engine("postgresql://postgres:postgres@localhost:5432/postgres",poolclass=NullPool)
+  
+  return psql
 
-
+#Instanciar função
+sql = conexao()
 
 #Pastas e extensões
 pasta_upload = 'static/upload'
 extensao_permitida = set(['jpeg','jpg','png','gif'])
 
-def arq_permitido(filename):
-    return '.' in filename and filename.rsplit('.',1)[1].lower() in extensao_permitida
-    
-
 
 #Cofigurações do Flask app
 app = Flask(__name__)
 app.secret_key = 'simulado'
-app.config['pasta_upload'] = pasta_upload
-app.config['max_content_length'] = 16 * 1024 * 1024
-
+app.config ['pasta_upload'] = pasta_upload
+app.config['tamanho_max'] = 16 * 1024 * 1024
 
 #Pagina Boas Vindas
 @app.route("/",methods=('GET','POST'))
@@ -41,8 +44,8 @@ def boas_vindas():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            cur.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
-            pesquisa = cur.fetchall()
+            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
+            
             
             if pesquisa == None:
                 flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
@@ -77,8 +80,8 @@ def index():
         #Tratando erros
         try:
             #Pesquisar no Banco de Dados
-            cur.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
-            pesquisa =  cur.fetchall()        
+            pesquisa = sql.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';").scalar()
+                        
 
             if pesquisa == None:
                 flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
@@ -109,8 +112,7 @@ def cadastro():
         
         try:
             #Pesquisar no Banco de Dados
-            cur.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
-            conn.commit()
+            sql.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
             flash(f"Usuario {user} REGISTRADO com sucesso.!!")
             
         except Exception as e:
@@ -121,98 +123,87 @@ def cadastro():
 
 @app.route("/questoes",methods=('GET','POST'))
 def questoes():
-     if request.method == 'POST':
+    if request.method == 'GET':
+        if'user' in session:
+            user = session['user']
+            flash(f"Bem Vindo, {user}") 
+            
+    if request.method == 'POST':
         #recebe dados
-        titulo = request.form['titulo']
-        enunciado = request.form['enunciado']
-        imagem = request.files['imagem']
+        titulo = request.form['title']
+        enunciado = request.form['enunciate']
+        imagem = request.files['picture']
         oa = request.form['a']
         ob = request.form['b']
         oc = request.form['c']
         od = request.form['d']
         oe = request.form['e']
-    
+        
+        #Armazenando imagens.
         try:
-            #Armazenando imagens.
             if imagem.filename == '':
-                flash('Nenhuma Imagem Selecionada.')
-                return redirect(request.url)
+                flash('Nenhuma imagem selecionanda.')
             
-            if imagem and arq_permitido(imagem.filename):
-                filename = secure_filename(imagem.filename)
-                imagem.save(os.path.join(app.config['pasta_upload'],filename))
-                flash('Imagem Armazenada com sucesso')
-                
-                
-                                  
+        
+            if imagem and extensao_permitida(imagem.filename):
+                imagem.filename = secure_filename(imagem.filename)
+                imagem.save(os.path.join(app.config['pasta_upload'],imagem.filename))
+            flash('Imagem Armazenada com sucesso')
+
         
             #Pesquisar no Banco de Dados
-            cur.execute(f"INSERT INTO questoes(titulo, enunciado, imagem, a, b, c, d, e) VALUES ('{titulo}','{enunciado}',bytea'{filename}','{oa}','{ob}','{oc}','{od}','{oe}');")
-            conn.commit()
+            sql.execute(f"INSERT INTO questoes(titulo, enunciado, imagem, a, b, c, d, e) VALUES ('{titulo}','{enunciado}','{imagem}','{oa}','{ob}','{oc}','{od}','{oe}');")
             flash('Nova questão GRAVADA no banco de dados.!!!')
-            return render_template('questoes.html',filename=filename)
-                                  
-            
         
         except Exception as e:
             print(e)
-            flash('Campos Vazios Ou erro de digitação. Favor digite novamente.')   
-    
-     return render_template('questoes.html')  
-        
+            flash('Campos Vazios Ou erro de digitação. Favor digite novamente.')     
+            
             
      
-    
-
-@app.route('/display/<filename>')
-def display(filename):    
-    return redirect(url_for('static', filename='uploads/' + filename),code=301)
-         
-    
+    return render_template('questoes.html')  
+     
+                          
+    if request.method == 'POST':
+        #recebe dados
+        titulo = request.form['title']
+        enunciado = request.form['enunciate']
+        imagem = request.files['picture']
+        oa = request.form['a']
+        ob = request.form['b']
+        oc = request.form['c']
+        od = request.form['d']
+        oe = request.form['e']
+        
+       
+       
           
     
 
 @app.route("/home/<user>", methods=('GET','POST'))
-def home(user):
-    if request.method == 'GET':
-        if 'user' in session:
-            user = session['user']
-            flash(f"Bem Vindo, {user}")
-        
+def home(user):    
+     
+    if 'user' in session:
+        user = session['user']
+        flash(f"Bem Vindo, {user}")
     try:
-        #Pesquisar Questões
-        cur.execute("SELECT * FROM questoes;")
-        result = cur.fetchall()
-        cur.execute("SELECT id FROM questoes where id = id;")
-        indice = cur.fetchall()
+        #Pesquisar no Banco de Dados
+        result = sql.execute("SELECT * FROM questoes;").scalar()
         if result is None:
             flash('Nenhuma Questão pendente !!!')
         else:
-            flash(f"As séries de {user} estão carregadas.!!")       
-        
+            flash(f"Resposta de {user} REGISTRADO com sucesso.!!")
                         
     except Exception as e:
-        print(e)
+        print(e)     
+
         
-    if request.method == 'POST':
-        oba = request.form['a']
-        obb = request.form['b']
-        obc = request.form['c']
-        obd = request.form['d']
-        obe = request.form['e']
-    
-        cur.execute(f"ALTER TABLE questoes ALTER COLUMN valor SET DEFAULT '{oba}' or '{obb}' or '{obc}' or '{obd}' or '{obe}';")    
-        conn.commit()
-        flash('Resposta REGISTRADA.') 
-    return render_template('home.html', result=result,indice=indice)
+
+    return render_template('home.html', result=result)
     
 
 @app.route("/gabarito", methods=('GET','POST'))
 def gabarito():
-    if request.method == 'GET':
-        if 'user' in session:
-            user = session['user']
-            flash(f" {user}, suas respostas foram analizadas")    
     return render_template('gabarito.html')
 
 

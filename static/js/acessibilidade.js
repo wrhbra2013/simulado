@@ -3,7 +3,7 @@ function contrast(){
 
     document.body.style.backgroundColor="black"; 
     document.body.style.color="white";
-      
+    document.div.container.color="white";      
 
 };
 

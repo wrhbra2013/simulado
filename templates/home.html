@@ -1,51 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="/static/ico/favicon.png"/>
+    <link rel="icon" type="image/png" href="/static/ico/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/static/padrao.css">
     <title>Gabarito</title>
 </head>
 <header>
-    <a class="titulo" href="index">
-        <img class="titulo" src="/static/ico/favicon-16x16.png">SIMULADO PROVA BRASIL</img>
-    </a>
-    <div class="menu">
-        <a class="link" href="index">Home</a>
-        <a class="link" href="cadastro">Novo usuário</a>
-        <a class="link" href="questoes">Nova questão</a>
-        <a class="link" href="sobre">O Projeto</a>
-    </div>
+    <a href="#" onclick="contrast()">Contrast</a>
+    <a href="#" onclick="font_mais()">Fonte Mais</a>
+    <nav>
+        <a class=".logo" href="index">SIMULADO PROVA BRASIL
+            <img class="logo" src="/static/ico/favicon-16x16.png"></img>
+        </a>
+        <div class="mobile-menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+            <li><a href="index">Home</a></li>
+            <li><a href="cadastro">Cadastro</a></li>
+            <li><a href="questoes">Questões</a></li>
+            <li><a href="sobre">Sobre</a></li>
+            <li><a href="/">Sair</a></li>
+
+        </ul>
+    </nav>
 </header>
+<main></main>
+
 <body>
     <!-- Mensagem -->
     {% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
-       {% endfor %}
+    {% endfor %}
+
+
 
     <div class="container">
-        {%for result in results%}
-        <h2>{{result[1]}}</h2>
-        <h2>{{result[2]}}</h2>
-        <h2>{{result[3]}}</h2>
-        <form action="/gabarito" method="POST">       
-           <input type="radio" id="A" name="A" value="14,250kg">
-           <label for="A">(A) <h2>{{result[4]}}</h2></label><br>
-           <input type="radio" id="B" name="B" value="40,850kg">
-           <label for="B">(B) <h2>{{result[5]}}</h2></label><br>
-           <input type="radio" id="C" name="C" value="48,500kg">
-           <label for="C">(C) <h2>{{result[6]}}</h2></label><br>
-           <input type="radio" id="D" name="D" value="76,450kg">
-           <label for="D">(D) <h2>{{result[7]}}</h2></label>
-           <input type="radio" id="E" name="E" value="76,450kg">
-           <label for="E">(E) <h2>{{result[8]}}</h2></label>
-           <button type="submit"> Enviar </button>
-           {%endfor%}
-       
-        </form>       
+        {%for indice in indice%}
+        <a href="{{indice['id']}}">{{indice['id']}} </a>
+        {%endfor%}
+
     </div>
-    
+
+    <div class="container">
+        {%for result in result%}
+        <h2>{{result['titulo']}}</h2>
+        <h2>{{result['enunciado']}}</h2>
+        {% if filename %}
+        <div>
+            <img src="{{ url_for('display', filename=filename) }}">
+        </div>
+        {% endif %}
+
+        <img src="data:;base64,{{result['imagem']}}"></img>
+        <form action="/gabarito" method="POST">
+            <div class="form">
+             <input type="radio" id="A" name="A" value="">
+            <label for="A">(A) <h2>{{result['a']}}</h2></label>
+            </div>
+            <div class="form">
+             <input type="radio" id="B" name="B">
+            <label for="B">(B) <h2>{{result['b']}}</h2></label>
+            </div>
+            <div class="form">
+            <input type="radio" id="C" name="C">
+            <label for="C">(C) <h2>{{result['c']}}</h2></label>
+            </div>
+            <div class="form">
+            <input type="radio" id="D" name="D">
+            <label for="D">(D) <h2>{{result['d']}}</h2></label>
+            </div>
+            <div class="form">
+            <input type="radio" id="E" name="E">
+            <label for="E">(E) <h2>{{result['e']}}</h2></label>
+            </div>
+            <hr>   
+            
+            <button type="submit"> Enviar </button>
+            {%endfor%}
+        </form>
+    </div>
+
+    <script src="/static/js/acessibilidade.js"></script>
+    <script src="/static/js/style.js"></script>
+
 </body>
+
 </html>

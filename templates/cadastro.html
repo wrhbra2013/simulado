@@ -10,16 +10,26 @@
     <title>Cadastro </title>
 </head>
 <header>
-    <a class="titulo" href="index">
-        <img class="titulo" src="/static/ico/favicon-16x16.png">SIMULADO PROVA BRASIL</img>
-    </a>
-    <div class="menu">
-        <a class="link" href="index">Home</a>
-        <a class="link" href="cadastro">Novo usuário</a>
-        <a class="link" href="questoes">Nova questão</a>
-        <a class="link" href="sobre">O Projeto</a>
-    </div>
+    <a href="#" onclick="contrast()">Contrast</a>
+    <a  href="#" onclick="font_mais()">Fonte Mais</a>     
+    <nav>           
+        <a class=".logo" href="index">SIMULADO PROVA BRASIL
+           
+        </a>
+        <div class="mobile-menu">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
+        </div>
+        <ul class="nav-list">
+            <li><a href="index">Home</a></li>
+            <li><a href="cadastro">Cadastro</a></li>
+            <li><a href="questoes">Questões</a></li>
+            <li><a href="sobre">Sobre</a></li>
+        </ul>
+    </nav>
 </header>
+<main></main>
 <body>
     {% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
@@ -28,22 +38,29 @@
     <div class="container">
         <h1> Novo Cadastro!</h1>
         <form action="cadastro" class="container" method="POST" >
-          <label>Instituição</label>
-           <input type="text" id="inst" name="inst" />
-           <br>
-           <label>Nome</label>
-           <input type="text" id="nome" name="nome"/>
-           <br>
-           <label>Série escolar:</label>
+         <div class="form">
+            <label>Instituição</label>
+            <input type="text" id="inst" name="inst" />
+         </div>
+         
+           <div class="form">
+            <label>Nome</label>
+            <input type="text" id="nome" name="nome"/>
+           </div>
+          
+           <div class="form">
+            <label>Série escolar:</label>
            <input type="number" id="serie" name="serie" />
-           <br><hr>
+           </div>
+           
+           <hr>
            <button type="submit">Enviar</button>       
        
            </form>
           
     </div>
-   
-       
+    <script src="/static/js/acessibilidade.js"></script>
+    <script src="/static/js/style.js"></script>       
     
 </body>
 </html>

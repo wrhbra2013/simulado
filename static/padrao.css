@@ -1,23 +1,11 @@
-header{
-    background-image: url('/static/view.jpg');
-    border: 1px solid black;
-    padding: 10px;
-    text-align: right; 
-    position: flex;       
-    }
-
-
-
 body{
-    background-image: url('/static/view.jpg');
-    background-size: auto;
-    overflow-y: auto;
-    display:inline;
-    position:flex;
+    background-color:rgb(247, 236, 183);   
+      
+    
     }
-
+/* Elmentos do Body  */
 div.container {
-    color: aliceblue;
+    color: rosybrown;
     overflow-y: auto;
     max-width: 500px;
     margin: 30px auto;
@@ -25,73 +13,172 @@ div.container {
     border-radius: 30px;
     padding: 10px;
     text-align: center;
-    display:block;
+    align-items: center;
+    display:flex;
+    flex-direction: column;        
+       
+ }
+ /* Input e label na mesma linha.*/
+  .form{
+        margin: 10px;
+        display:flex;
+        flex-direction: row;
     }
-
-
-
-
-input{
+ textarea {
+        padding: 1px;
+        width: 300px;
+        height: 100px;
+        margin: 1px;         
     
-    display: inline;
+  }    
 
-}
-label{
-    text-align: center;
-    display:block;
-    background-color: auto;
-}
 p{
     
     font-family: Arial, Helvetica, sans-serif; 
     font-size: medium;
     text-align: center;
-    color: yellow;
+    margin: 20px;
+    color: red;
         
 }
 h2{
     font-family: Arial, Helvetica, sans-serif; 
     font-size: medium;
     text-align: center;
-    color: white;
+    color: rgb(15, 14, 14);
 }
-.menu{
-    padding: 10px;
-    max-width: 50px;
-    max-height: 50px;
-    color: aliceblue;
-    
-    display:inline;
-               
-    }
-.link{
-    padding: 5px;
-    border: 1px solid black;
-    border-radius: 10px;
-    color: aliceblue;
-    
-        
-}
-
-
-.titulo{
-    text-align: left;
-    font-style: italic;
-    display: block;
-    color: aliceblue;
-
-}
-
-.questoes{
-    text-align: center;
-    font-style: italic;
-    display: block;
-    color: aliceblue;
-    }
 
 table,tbody{
        
     display: inline;
 
+}
+
+/* Elementos do Menu Nav Bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+  }
+
+  * {
+    margin:0;
+    padding: 0;
+    
+  }
+a{
+    color: green;
+    text-decoration: none;
+    transition: 0.3s;
+}
+a:hover {
+    opacity: 0.7;
+}
+nav{
+    display:flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgb(186, 206, 160);
+    height: 5vh;
+    
+}
+
+
+.logo{
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    
+}
+main{
+    background: rgb(186, 206, 160) center center;
+    background-size: cover;
+    height: 1vh;
+        
+}
+
+.nav-list{
+    list-style: none;
+    display: flex;    
+
+}
+.nav-list li {
+    
+    letter-spacing: 3px;
+    margin-left:22px;
+
+}
+.mobile-menu{
+    cursor: pointer;
+    display: none;
+    
+    
+}
+.mobile-menu div{
+    width: 32px;
+    height: 2px;
+    background: green;
+    margin: 8px;
+    transition: 0.3s;
+
+}
+@media (max-width:999px){
+    body{
+        overflow-x: hidden;
+    }
+    .nav-list{
+        position: absolute;
+        top: 8vh;
+        right: 0;
+        width: 50vw;
+        height: 92vh;
+        background: rgb(186, 206, 160);
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in;
+        
+    }
+    .nav-list li{
+        margin-left: 0;
+        opacity: 10px;        
+    }
+    
+    .mobile-menu{
+        display: block;
+    }
+}
+.nav-list.active {
+    transform: translateX(0);
+    
+}
+@keyframes navLinkFade {
+    from{
+        opacity:0;
+        transform: translateX(50px);
+
+    }
+    to{
+        opacity: 1;
+        transform: translateX(0);
+
+    }
+}
+.mobile-menu.active .line1{
+    transform: rotate(-45deg) translate(-8px, 8px);
+
+}
+
+.mobile-menu.active .line2{
+    opacity: 0;
+}
+
+.mobile-menu.active .line3{
+    transform: rotate(45deg) translate(-5px, -7px);
+    
 }
 

@@ -3,13 +3,17 @@ function contrast(){
 
     document.body.style.backgroundColor="black"; 
     document.body.style.color="white";
-    document.div.container.color="white";      
+          
 
 };
 
+let tamanho = 16;
 function font_mais(){
-       let tamanho = 20+'px'; 
-        document.body.style.fontSize=tamanho++; 
-             
+    tamanho++;
+    document.body.style.fontSize=tamanho+"px"; 
+};
 
-    };
+function font_menos(){
+    tamanho--;
+    document.body.style.fontSize=tamanho+"px";
+}

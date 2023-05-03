@@ -11,9 +11,10 @@
 </head>
 <header>
     <a href="#" onclick="contrast()">Contrast</a>
-    <a  href="#" onclick="font_mais()">Fonte Mais</a>     
+    <a href="#" onclick="font_mais()">F+</a>
+    <a href="#" onclick="font_menos()">F-</a>
     <nav>           
-        <a class=".logo" href="index">SIMULADO PROVA BRASIL
+        <a class=".logo" href="questoes">SIMULADO PROVA BRASIL
             
         </a>
         <div class="mobile-menu">
@@ -51,33 +52,66 @@
                 <label>Enunciado</label>
            <textarea id="enunciado" name="enunciado" rows="10" cols="50"></textarea>
             </div>
+            
             <div class="form">
             <label>Imagem</label>
-            <input type="file" id="imagem" name="imagem" accept="imagem/png,imagem/jpeg,imagem/jpg" />
-            </div>         
+            <input type="file" id="imagem" name="imagem" autocomplete="off" required/>
+            </div>
+            
+                {% if filename %}
+                <div class="form">
+                <img src="{{url_for('display',filename=filename)}}">
+                </div>
+                {%endif%}
+                  
             
             <div class="form">
             <label>A</label>
             <input type="text" id="a" name="a" />
+            <select id="valor" name="valor">
+                <option value="selecione">Selecione</option>
+                <option value="true">Verdade</option>
+                <option value="false">Falso</option>
+            </select>
             </div>
            <div class="form">
             <label>B</label>
             <input type="text" id="b" name="b" />
+            <select id="valor" name="valor">
+                <option value="selecione">Selecione</option>
+                <option value="true">Verdade</option>
+                <option value="false">Falso</option>
+            </select>
            </div>        
            
             <div class="form">
             <label>C</label>
             <input type="text" id="c" name="c" />
+            <select id="valor" name="valor">
+                <option value="selecione">Selecione</option>
+                <option value="true">Verdade</option>
+                <option value="false">Falso</option>
+            </select>
             </div>
             
             <div class="form">
              <label>D</label>
             <input type="text" id="d" name="d" />
+            <select id="valor" name="valor">
+                <option value="selecione">Selecione</option>
+                <option value="true">Verdade</option>
+                <option value="false">Falso</option>
+            </select>
             </div>
             
             <div class="form">
             <label>E</label>
             <input type="text" id="e" name="e" />
+            <select id="valor" name="valor">
+                <option value="selecione">Selecione</option>
+                <option value="true">Verdade</option>
+                <option value="false">Falso</option>
+            </select>
             </div>
             
             <hr>

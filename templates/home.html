@@ -11,10 +11,11 @@
 </head>
 <header>
     <a href="#" onclick="contrast()">Contrast</a>
-    <a href="#" onclick="font_mais()">Fonte Mais</a>
+    <a href="#" onclick="font_mais()">F+</a>
+    <a href="#" onclick="font_menos()">F-</a>
     <nav>
-        <a class=".logo" href="index">SIMULADO PROVA BRASIL
-            <img class="logo" src="/static/ico/favicon-16x16.png"></img>
+        <a class=".logo" href="home">SIMULADO PROVA BRASIL
+           </img>
         </a>
         <div class="mobile-menu">
             <div class="line1"></div>
@@ -41,54 +42,51 @@
 
 
 
-    <div class="container">
+    <div class="indice" >
         {%for indice in indice%}
-        <a href="{{indice['id']}}">{{indice['id']}} </a>
-        {%endfor%}
+        <a href="{{indice['id']}}" >{{indice['id']}} </a>
+                 {%endfor%}
 
-    </div>
-
+    </div> 
     <div class="container">
-        {%for result in result%}
+       
+        <form action="gabarito" method="POST">
+        {% for result in result%}
         <h2>{{result['titulo']}}</h2>
-        <h2>{{result['enunciado']}}</h2>
-        {% if filename %}
-        <div>
-            <img src="{{ url_for('display', filename=filename) }}">
-        </div>
-        {% endif %}
-
-        <img src="data:;base64,{{result['imagem']}}"></img>
-        <form action="/gabarito" method="POST">
+        <h2>{{result['enunciado']}}</h2>     
+      
             <div class="form">
-             <input type="radio" id="A" name="A" value="">
-            <label for="A">(A) <h2>{{result['a']}}</h2></label>
+               <img src="{{result['imagem']}}">
             </div>
             <div class="form">
-             <input type="radio" id="B" name="B">
-            <label for="B">(B) <h2>{{result['b']}}</h2></label>
+             <input type="radio" id="a" name="questao"  value="{{result['a']}}">
+            <label for="A">(A) {{result['a']}}</label>
             </div>
             <div class="form">
-            <input type="radio" id="C" name="C">
-            <label for="C">(C) <h2>{{result['c']}}</h2></label>
+             <input type="radio" id="b" name="questao" value="{{result['b']}}">
+            <label for="B">(B) {{result['b']}}</label>
             </div>
             <div class="form">
-            <input type="radio" id="D" name="D">
-            <label for="D">(D) <h2>{{result['d']}}</h2></label>
+            <input type="radio" id="c" name="questao" value=" {{result['c']}}">
+            <label for="C">(C) {{result['c']}}</label>
             </div>
             <div class="form">
-            <input type="radio" id="E" name="E">
-            <label for="E">(E) <h2>{{result['e']}}</h2></label>
+            <input type="radio" id="d" name="questao" value="{{result['d']}}">
+            <label for="D">(D) {{result['d']}}</label>
+            </div>
+            <div class="form">
+            <input type="radio" id="e" name="questao" value="{{result['e']}}">
+            <label for="E">(E) {{result['e']}}</label>
             </div>
             <hr>   
-            
-            <button type="submit"> Enviar </button>
+             <button type="submit"> Enviar </button>             
             {%endfor%}
         </form>
-    </div>
+    
 
     <script src="/static/js/acessibilidade.js"></script>
     <script src="/static/js/style.js"></script>
+    <script src="/static/js/control.js "></script>
 
 </body>
 

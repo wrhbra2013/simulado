@@ -11,18 +11,30 @@ conn, cur = conexao()
 
     
 #Mensagem
-if (cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(50) NOT NULL,nome VARCHAR(50) NOT NULL ,serie INT NOT NULL);')):
+try:
+    cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(50) NOT NULL,nome VARCHAR(50) NOT NULL ,serie INT NOT NULL);')
     conn.commit()
-    print("Tabela Estudante Criada com Sucesso.")
-else:
-    print("Tabela Estudante Carregada com Sucesso.")
+          
+     
+except Exception as e:    
+    print('Log de erro =>',e)
+finally:
+     print('Tabela Estudante CARREGADA com Sucesso.')
     
-if (cur.execute('CREATE TABLE IF NOT EXISTS questoes (id serial PRIMARY KEY, titulo VARCHAR  NOT NULL, enunciado VARCHAR(10000) NOT NULL, imagem BYTEA,a VARCHAR NOT NULL ,b VARCHAR NOT NULL ,c VARCHAR NOT NULL ,d VARCHAR NOT NULL ,e VARCHAR NOT NULL ,valor boolean);')):
+    
+
+try:
+    cur.execute('CREATE TABLE IF NOT EXISTS questoes (id serial PRIMARY KEY, titulo VARCHAR  NOT NULL, enunciado VARCHAR(10000) NOT NULL, imagem VARCHAR, a VARCHAR NOT NULL ,b VARCHAR NOT NULL ,c VARCHAR NOT NULL ,d VARCHAR NOT NULL  ,valor VARCHAR);')
     conn.commit()
-    print("Tabela Questões Criada com Sucesso.")
-else:
-    print("Tabela Questões Carregada com Sucesso.")
+             
 
+except Exception as e:
+    print('Log de Erro =>',e)
+finally:
+     print('Tabela Questões CARREGADA com Sucesso.')
+     
 
+   
+    
 
 

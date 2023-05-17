@@ -43,79 +43,59 @@
     <div class="container">
     <h1>Cadastrar Novas Questões: </h1>
         <form action="questoes" method="POST" enctype="multipart/form-data">
+            
             <div class="form">
             <label>Titulo</label>
-            <input type="text" id="titulo" name="titulo" />
+            <input type="text" id="titulo" name="titulo" value="{{request.form['titulo']}}"/>
             </div>
             
             <div class="form">
-                <label>Enunciado</label>
-           <textarea id="enunciado" name="enunciado" rows="10" cols="50"></textarea>
+           <label>Enunciado</label>
+           <textarea id="enunciado" name="enunciado" rows="10" cols="50"> {{request.form['enunciado']}}</textarea>
             </div>
             
             <div class="form">
             <label>Imagem</label>
-            <input type="file" id="imagem" name="imagem" autocomplete="off" required/>
+            <input type="file" id="imagem" name="imagem" />
             </div>
             
                 {% if filename %}
                 <div class="form">
-                <img src="{{url_for('display',filename=filename)}}">
+                <img class="imagem" src="{{url_for('display',filename=filename)}}">
                 </div>
                 {%endif%}
                   
             
             <div class="form">
             <label>A</label>
-            <input type="text" id="a" name="a" />
-            <select id="valor" name="valor">
-                <option value="selecione">Selecione</option>
-                <option value="true">Verdade</option>
-                <option value="false">Falso</option>
-            </select>
+            <input type="text" id="a" name="a" value="{{request.form['a']}}" />
+             <input type="checkbox" id="valor" name="valor" value="a"/>         
             </div>
            <div class="form">
             <label>B</label>
-            <input type="text" id="b" name="b" />
-            <select id="valor" name="valor">
-                <option value="selecione">Selecione</option>
-                <option value="true">Verdade</option>
-                <option value="false">Falso</option>
-            </select>
-           </div>        
+            <input type="text" id="b" name="b" value="{{request.form['b']}}"/>
+            <input type="checkbox" id="valor" name="valor" value="b"/>  
+            </div>      
            
             <div class="form">
             <label>C</label>
-            <input type="text" id="c" name="c" />
-            <select id="valor" name="valor">
-                <option value="selecione">Selecione</option>
-                <option value="true">Verdade</option>
-                <option value="false">Falso</option>
-            </select>
+            <input type="text" id="c" name="c" value="{{request.form['c']}}"/>
+            <input type="checkbox" id="valor" name="valor" value="c"/>  
             </div>
             
             <div class="form">
              <label>D</label>
-            <input type="text" id="d" name="d" />
-            <select id="valor" name="valor">
-                <option value="selecione">Selecione</option>
-                <option value="true">Verdade</option>
-                <option value="false">Falso</option>
-            </select>
-            </div>
+            <input type="text" id="d" name="d" value="{{request.form['d']}}" />
+            <input type="checkbox" id="valor" name="valor" value="d"/>  
+            </div>    
             
-            <div class="form">
-            <label>E</label>
-            <input type="text" id="e" name="e" />
-            <select id="valor" name="valor">
-                <option value="selecione">Selecione</option>
-                <option value="true">Verdade</option>
-                <option value="false">Falso</option>
-            </select>
-            </div>
             
             <hr>
             <button type="submit" >Enviar</button>
+            {%if indice%}
+            <button type="submit"  action="{{indice}}"
+            onclick="return confirm('Você tem certeza que deseja DELETAR este registro?')">Deletar</button>
+            {%endif%}
         </form>
     </div>
 

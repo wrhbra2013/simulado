@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Questão</title>
     <link rel="icon" type="image/png" href="/static/ico/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/static/padrao.css">
     <title>Provas</title>
@@ -14,7 +14,7 @@
     <a href="#" onclick="font_mais()">F+</a>
     <a href="#" onclick="font_menos()">F-</a>
     <nav>
-        <a class=".logo" href="home">SIMULADO PROVA BRASIL
+        <a class=".logo" href="q">SIMULADO PROVA BRASIL
            </img>
         </a>
         <div class="mobile-menu">
@@ -38,20 +38,44 @@
     <!-- Mensagem -->
     {% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
-    {% endfor %}                                                        
-    
-                
-    <div class="indice">
-    <form action="q" method="post">   
-    {%for indice in indice%}
-     <button type="submit" name="btn" value="{{indice['id']}}" style="width: 50px; border-radius: 30px;">{{indice['id']}}</button>
-     {%endfor%}
-   </form>
-      </div>       
+    {% endfor %}
 
+          <h2>Questão{{btn}}</h2>                                          
+
+    <div class="indice">
+    <form action="gabarito" method="post">
+    {%for result in result%}   
+     <h2>{{result['titulo']}}</h2>
+     <h2>{{result['enunciado']}}</h2>     
+   
+         <div class="form">
+            <img class="imagem" src="{{url_for('display',filename=result['imagem'])}}">
+         </div>
+         <div class="form">
+          <input type="radio" id="a" name="questao"  value="a" />
+         <label for="A">(A) {{result['a']}}</label>
+         </div>
+         <div class="form">
+          <input type="radio" id="b" name="questao" value="b" />
+         <label for="B">(B) {{result['b']}}</label>
+         </div>
+         <div class="form">
+         <input type="radio" id="c" name="questao" value="c" />
+         <label for="C">(C) {{result['c']}}</label>
+         </div>
+         <div class="form">
+         <input type="radio" id="d" name="questao" value="d" />
+         <label for="D">(D) {{result['d']}}</label>
+         </div>
+          <hr>   
+          <button id="gabarito" type="submit"> Enviar </button> 
+     </form>
+        {%endfor%}
+    </div>
+    
     <script src="/static/js/acessibilidade.js"></script>
     <script src="/static/js/style.js"></script>
     <script srcc="/static/js/control.js"></script>
-     
+        
 </body>
 </html>

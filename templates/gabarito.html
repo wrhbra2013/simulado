@@ -32,6 +32,7 @@
 </header>
 <main></main>
 <body>
+   
     <!-- Mensagem -->
     {% for message in get_flashed_messages() %}
     <p>{{ message }}</p>
@@ -39,15 +40,29 @@
     <div class="container">        
         <h2> Gabarito</h2>
     </div>
-    <div class="container" > 
-        {%if input%}       
+    <div class="indice">
+        {%for res in res%}
+        <label> Questão</label>
+        <h2>{{res['id']}}</h2>
+        <h2>{{res['enunciado']}}</h2>
+        <label>Resposta</label>
+        <h2>{{res['valor']}}</h2> 
+        {%endfor%}       
+           
+        {%if input%}
+        <label> Alternativa Marcada </label>
        <h2 id="resultado">{{input}}</h2>
        {%endif%}
        
-    </div>
-
-
-    
+       
+       
+       <form action="{{url_for('delete',indice=indice)}}" method="POST">
+        {%if indice%}
+         <button type="submit"  action="{{indice['id']}}" onclick="return confirm('Você tem certeza que deseja DELETAR este registro?')">Deletar</button>
+        {%endif%}        
+       </form>    
+                  
+    </div>    
 
     <script src="/static/js/acessibilidade.js"></script>
     <script src="/static/js/style.js"></script>

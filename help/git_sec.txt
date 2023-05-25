@@ -28,19 +28,3 @@ git branch -M main
 git push -u origin main
 
 #Git hub recovery codes
-cadb7-27359
-37cf6-d9884
-c3a78-de1c8
-29cf6-8f049
-9a949-f48cb
-2cbd2-beb5f
-9f7da-37305
-5d726-89416
-a06c2-3ece4
-3c01a-db8e2
-8c874-83e3a
-b9592-8560d
-aa488-79f13
-52901-1d141
-28a93-f5def
-f635e-9560e

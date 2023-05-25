@@ -9,32 +9,19 @@
     <title>Resultado</title>    
 </head>
 
-<body> 
+<body>
+   <h2 style="display:block;">RESULTADO FINAL.</2>
+   {%if user, soma, quant%}
     <div class="indice">
-        <!--Notas-->
-     {%if soma, quant%}
-     <label>RESULTADO FINAL.</label>
-     <div class="form">
-        <table>
-            <tr>
-                <th>ESTUDANTE</th>
-                <th>TOTAL DE QUESTÕES</th>
-                <th>QUESTÕES CERTAS</th>                
-            </tr>
-            <tr>
-                <td>{{user}}</td>
-                <td>{{quant}}</td>
-                <td>{{soma}}</td>
-
-            </tr>
-        </table>
+        <!--Notas-->        
+        <h2 style="font-size: 20px;"> ESTUDANTE: {{user}}</h2>
         <h2 style="font-size: 20px;"> QUESTÕES CERTAS: {{soma}}</h2>
         <h2 style="font-size: 20px;"> TOTAL DE QUESTÕES: {{quant}}</h2>
 
-     </div>      
+     </div>  
      {%endif%}
 
-    </div> 
+   
     
   
     

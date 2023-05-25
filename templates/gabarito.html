@@ -10,35 +10,26 @@
 </head>
 
 <body>  
-   
-
-   
+  
+   <h2 style="display:block;">QUESTÕES  RESPONDIDAS.</2>
     <!--Questão-->      
     {%for res in res%} 
-    <div class="container"> 
+    <div class="indice"> 
         <form action="" method="POST">                
         <label> Questão</label>
         <h2>{{res['questao_id']}}</h2>
         <h2>{{res['questao_enunciado']}}</h2>
+        <label>Alternativa Marcada</label>
         <h2>{{res['alternativa']}}</h2>
         <button type="submit" onclick="return alert('ENTREGAR a Prova?')">Enviar</button>
-        </form>
-        
-      
-                   
+        </form>                    
     </div>  
-    {%endfor%}  
-
-
- 
-              
+    {%endfor%}           
   
     
     <script src="/static/js/acessibilidade.js"></script>
     <script src="/static/js/style.js"></script>
     <script src="/static/js/control.js"></script>
-
-
     
 </body>
 </html>

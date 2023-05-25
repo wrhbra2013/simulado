@@ -12,7 +12,7 @@ conn, cur = conexao()
     
 #Mensagem
 try:
-    cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(50) NOT NULL,nome VARCHAR(50) NOT NULL ,serie INT NOT NULL);')
+    cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(30) NOT NULL,nome VARCHAR(30) NOT NULL ,serie INT NOT NULL, last_update TIMESTAMP DEFAULT now());')
     conn.commit()
           
      
@@ -24,7 +24,7 @@ finally:
     
 
 try:
-    cur.execute('CREATE TABLE IF NOT EXISTS questoes (id serial PRIMARY KEY, titulo VARCHAR  NOT NULL, enunciado VARCHAR(10000) NOT NULL, imagem VARCHAR, a VARCHAR NOT NULL ,b VARCHAR NOT NULL ,c VARCHAR NOT NULL ,d VARCHAR NOT NULL  ,valor VARCHAR);')
+    cur.execute('CREATE TABLE IF NOT EXISTS questoes (id serial PRIMARY KEY, competencia VARCHAR(70), titulo VARCHAR  NOT NULL, enunciado VARCHAR(10000) NOT NULL, imagem VARCHAR, a VARCHAR NOT NULL ,b VARCHAR NOT NULL ,c VARCHAR NOT NULL ,d VARCHAR NOT NULL  ,valor VARCHAR, last_update TIMESTAMP DEFAULT now());')
     conn.commit()
              
 
@@ -33,8 +33,27 @@ except Exception as e:
 finally:
      print('Tabela Questões CARREGADA com Sucesso.')
      
+try:
+    cur.execute('CREATE TABLE IF NOT EXISTS resultados (id serial PRIMARY KEY, estudante_escola VARCHAR(30) NOT NULL, estudante_nome VARCHAR(30) NOT NULL,  questao_id INT, questao_enunciado VARCHAR(10000), questao_valor VARCHAR(2), alternativa VARCHAR(2), nota INT, last_update TIMESTAMP DEFAULT now());')
+    conn.commit()
+             
 
-   
+except Exception as e:
+    print('Log de Erro =>',e)
+finally:
+     print('Tabela Resultados CARREGADA com Sucesso.')
+     
+
+try:
+    cur.execute('CREATE TABLE IF NOT EXISTS comentarios (id serial PRIMARY KEY, nome VARCHAR(30),contato VARCHAR(30),assunto VARCHAR(30), comentario VARCHAR, last_update TIMESTAMP DEFAULT now());')
+    conn.commit()           
+
+except Exception as e:
+    print('Log de Erro =>',e)
+finally:
+    print('Comentarios...')
+    
+    
     
 
 

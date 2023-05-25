@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/static/ico/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/static/padrao.css">
+    <title>Resultado</title>    
+</head>
+
+<body> 
+    <div class="indice">
+        <!--Notas-->
+     {%if soma, quant%}
+     <label>RESULTADO FINAL.</label>
+     <div class="form">
+        <table>
+            <tr>
+                <th>ESTUDANTE</th>
+                <th>TOTAL DE QUESTÕES</th>
+                <th>QUESTÕES CERTAS</th>                
+            </tr>
+            <tr>
+                <td>{{user}}</td>
+                <td>{{quant}}</td>
+                <td>{{soma}}</td>
+
+            </tr>
+        </table>
+        <h2 style="font-size: 20px;"> QUESTÕES CERTAS: {{soma}}</h2>
+        <h2 style="font-size: 20px;"> TOTAL DE QUESTÕES: {{quant}}</h2>
+
+     </div>      
+     {%endif%}
+
+    </div> 
+    
+  
+    
+    <script src="/static/js/acessibilidade.js"></script>
+    <script src="/static/js/style.js"></script>
+    
+    
+</body>
+</html>

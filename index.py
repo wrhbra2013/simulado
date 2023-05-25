@@ -8,97 +8,124 @@ import os
 pasta_upload = 'static/uploads'
 extensao_permitida = set(['jpeg','jpg','png','gif'])
 
+#Filtro de imagens
 def arq_permitido(filename):
     return '.' in filename and filename.rsplit('.',1)[1].lower() in extensao_permitida
     
-def get_questoes(indice):
-    cur.execute(f"SELECT * FROM questoes where id = '{indice}';")
-    indice = cur.fetchone()
-    return indice
+
+#Funções de apoio
+#Login
+def get_login(escola,user,ano):    
+    cur.execute(f"SELECT * from estudante where inst LIKE '%{escola}%' and nome LIKE '%{user}%' and serie = '{ano}';")
+    a = cur.fetchall()    
+    b = len(a)    
+    if b == 0:
+        flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
+        return render_template('index.html')
+    else:
+        #Sessão do usuário
+        session['usuario'] = user
+        session.permanent = True
+        return redirect(url_for('home',user=user))
+                
+    
+    
+   
+#Lista de questoes
+def get_all_questoes():
+    cur.execute('SELECT id FROM questoes;')
+    all = cur.fetchall()
+    return all
+
+#identificar aluno por nome
+def get_aluno(name):
+    cur.execute(f"SELECT inst, nome from estudante where nome LIKE '{name}%';")
+    name = cur.fetchall()
+    return name
 
 
+
+#Busca de  questões por questoes
+def get_questoes(qnumero):
+    cur.execute(f"SELECT * from questoes where id = '{qnumero}';")
+    qnumero = cur.fetchmany()
+    return qnumero
+
+
+#Retorno de respostas do aluno
+def get_respostas(qaluno):
+    cur.execute(f"SELECT * FROM resultados where estudante_nome = '{qaluno}';")
+    qaluno = cur.fetchall()
+    return qaluno
+
+#Apuração de notas
+def get_notas(quem):
+    cur.execute(f"SELECT SUM(nota) FROM resultados where estudante_nome = '{quem}' ;")
+    quem = cur.fetchone()
+    return quem
+
+#Funções insert into
+#Cadastro de alunos.
+def post_aluno(escola,user,ano):
+     cur.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
+     post_aluno = conn.commit()
+     return post_aluno
+
+#Registro de respostas
+def post_resposta(escola, nome, id, enunciado, valor, input, pontos):    
+    cur.execute(f"INSERT INTO resultados(estudante_escola, estudante_nome, questao_id, questao_enunciado, questao_valor, alternativa, nota)VALUES ('{escola}','{nome}','{id}', '{enunciado}','{valor}','{input}','{pontos}');")
+    post_resposta =  conn.commit()  
+    return post_resposta
+
+#Registro de questoes.
+def post_questoes(competencia, titulo, enunciado, filename, oa, ob, oc, od, value):
+    cur.execute(f"INSERT INTO questoes(competencia, titulo, enunciado, imagem, a, b, c, d, valor) VALUES ('{competencia}','{titulo}','{enunciado}','{filename}','{oa}','{ob}','{oc}','{od}','{value}');")
+    post_questoes =  conn.commit()
+    return post_questoes
+
+#Registro de comentarios
+def post_comentarios(nom,contat,assu,coment):
+    cur.execute(f"INSERT INTO contato (nome,contato,assunto,comentario) VALUES ('{nom}','{contat}','{assu}','{coment}') ;")
+    post_comentarios = conn.commit()
+    return post_comentarios
+    
 
 #Cofigurações do Flask app
 app = Flask(__name__)
 app.secret_key = 'simulado'
-app.permanent_session_lifetime = minutes=5
 app.config['pasta_upload'] = pasta_upload
 app.config['max_content_length'] = 16 * 1024 * 1024
 
+
+
+
 #Pagina Boas Vindas
 @app.route("/",methods=('GET','POST'))
-def boas_vindas():
-        
-     if request.method =='POST':
-     
+def boas_vindas():    
+    if request.method =='POST':     
         #Recebe dados
         escola = request.form['inst']
         user = request.form['nome']
         ano = request.form['serie']
+        autentica = get_login(escola,user,ano)
+        return autentica
+    return render_template('index.html')
 
-        #Sessão do usuário
-        session['usuario'] = user
-        session.permanent = True
-        
-        #Tratando erros
-        try:
-            #Pesquisar no Banco de Dados
-            cur.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
-            pesquisa = cur.fetchall()
-            
-            if pesquisa == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
-            else:
-                return redirect(url_for('home',user=user))                          
-
-        except Exception as e:
-            print(e)
-            flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')
-                 
-        
-     
-     return render_template('index.html')
-
+#Página de Reload para login
 @app.route("/index",methods=('GET','POST'))
 def index():
-     if request.method == 'GET':
-         flash('Entre com suas credenciais.')
-     
-     if request.method =='POST':
-     
+    if request.method == 'GET':
+        flash('Entre com as suas credenciais.')
+    if request.method =='POST':     
         #Recebe dados
         escola = request.form['inst']
         user = request.form['nome']
         ano = request.form['serie']
-
-        #Sessão do usuário
-        session['usuario'] = user
-        session.permanent = True
+        autentica = get_login(escola,user,ano)
+        return autentica
         
-        
-
-        #Tratando erros
-        try:
-            #Pesquisar no Banco de Dados
-            cur.execute(f"SELECT inst, nome, serie FROM estudante where inst='{escola}' and nome='{user}' and serie='{ano}';")
-            pesquisa =  cur.fetchall()        
-
-            if pesquisa == None:
-                flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
-            else:                
-                return redirect(url_for('home',user=user))                  
-                            
-                         
-
-        except Exception as e:
-            print(e)
-            flash('Campos Vazios ou erro de digitação. Por favor digite novamente!')  
-        
-
-     
-     return render_template('index.html')
-
-
+    return render_template('index.html')
+    
       
 #Pagina de cadastro
 @app.route("/cadastro",methods=('GET','POST'))
@@ -112,8 +139,7 @@ def cadastro():
         
         try:
             #Pesquisar no Banco de Dados
-            cur.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
-            conn.commit()
+            post_aluno(escola,user,ano)
             flash(f"Usuario {user} REGISTRADO com sucesso.!!")
             
         except Exception as e:
@@ -122,10 +148,14 @@ def cadastro():
           
     return render_template('cadastro.html')
 
+#Página de cadastro de questões
 @app.route("/questoes",methods=('GET','POST'))
-def questoes():
-     if request.method == 'POST':
+def questoes():  
+    
+    if request.method == 'POST':
+        
         #recebe dados
+        competencia = request.form['competencia']
         titulo = request.form['titulo']
         enunciado = request.form['enunciado']
         imagem = request.files['imagem']
@@ -133,18 +163,16 @@ def questoes():
         ob = request.form['b']
         oc = request.form['c']
         od = request.form['d']
-        oe = request.form['e']
         value = request.form['valor']    
         
     
         #Armazenando imagens.
         if imagem.filename == '':
-             filename = ''
+             filename = ''             
              flash('Questão sem Imagem.')
-             cur.execute(f"INSERT INTO questoes(titulo, enunciado, imagem, a, b, c, d, e,valor) VALUES ('{titulo}','{enunciado}','{filename}','{oa}','{ob}','{oc}','{od}','{oe}','{value}');")
-             conn.commit()
+             post_questoes(competencia, titulo, enunciado, filename, oa, ob, oc, od, value)
              flash('Nova questão GRAVADA no banco de dados.!!!')
-             return redirect(request.url)
+             return redirect(url_for('questoes',filename=filename))
         
         if imagem and arq_permitido(imagem.filename):
             filename = secure_filename(imagem.filename)
@@ -152,9 +180,8 @@ def questoes():
             flash('Imagem Armazenada com sucesso')
             
             #Inserir imagem no Banco de Dados
-            cur.execute(f"INSERT INTO questoes(titulo, enunciado, imagem, a, b, c, d, e,valor) VALUES ('{titulo}','{enunciado}','{filename}','{oa}','{ob}','{oc}','{od}','{oe}','{value}');")
-            conn.commit()
-            flash('Nova questão GRAVADA no banco de dados.!!!')            
+            post_questoes(competencia, titulo, enunciado, filename, oa, ob, oc, od, value)
+            flash('Nova questão GRAVADA no banco de dados.!!!')          
             
             return render_template('questoes.html',filename=filename)      
         
@@ -163,85 +190,125 @@ def questoes():
             flash('As imagens permitidas são: jpeg, jpg, png e gif')
             return redirect(request.url)        
     
-     return render_template('questoes.html')  
-        
-            
+    return render_template('questoes.html')        
      
     
-
+#Rota especifica para imagens.
 @app.route('/display/<filename>')
 def display(filename):     
      return redirect(url_for('static', filename='uploads/' + filename),code=301)
-        
-    
+ 
+#Aprresentação das questões       
 @app.route("/home/<user>", methods=('GET','POST'))
 def home(user):    
-    if request.method == 'GET':                 
-        if 'user' in session:
-            user = session['user']
-            
-        #Buscar questões     
-        cur.execute("SELECT id FROM questoes where id = id;")              
-        indice = cur.fetchall()               
-              
-        if indice is None:
-            flash('Nenhuma Questão pendente !!!')
-        else:
-            flash("As séries  estão carregadas.!!")        
-        
+    #Buscar questões     
+    indice = get_all_questoes()    
+    if indice is None:
+        flash('Nenhuma Questão pendente !!!')  
                      
-    if request.method == 'POST': 
-        btn = request.form['btn']  
-        return redirect(url_for('q',btn=btn))            
-          
+    if request.method == 'POST':         
+        btn = request.form['btn']       
+        
+        return redirect(url_for('q',btn=btn,user=user))     
     return render_template('home.html',indice=indice,user=user)
 
-@app.route("/q/<btn>",methods=['GET','POST'])
-def q(btn):
-    if request.method == 'GET':
-        cur.execute(f"SELECT * FROM questoes where id = '{btn}';")
-        result = cur.fetchmany()
-    if request.method == 'POST':
-        input = request.form['questao']
-        return redirect(url_for('gabarito',input=input))
-    return render_template('q.html',result=result,btn=btn)
+#Página de questões
+@app.route("/q/<user>/<btn>",methods=['GET','POST'])
+def q(user,btn):
+    #Encontrar aluno
+    aluno = get_aluno(user)
+    
+    #Busca por questão
+    result = get_questoes(btn)
+    
+    
+    #Quantidade de questoes     
+    indice = get_all_questoes()                   
+           
+                              
+    if request.method == 'POST': 
+        try:              
+            #identificação do aluno
+            escola = request.form['estudante_escola']
+            nome = request.form['estudante_nome']
+
+            #identificação da questão.
+            id = request.form['questao_id']
+            enunciado = request.form['questao_enunciado']
+            valor = request.form['questao_valor']
+
+            #Alternativa Marcada.
+            input = request.form['input_estudante'] 
+
+            #Filtro da resposta certa.           
+            resposta = input in valor
+            #Apuração instantnea
+            if resposta == True:
+                #resp = 'true'
+                nota = 1 
+            else:
+                #resp = 'false'
+                nota = 0
+            pontos = nota
+                
+            post_resposta(escola, nome, id, enunciado, valor, input, pontos)
+        except Exception:
+            flash('Falta ASSINALAR alternativa!!')
+            
+            
+        return redirect(url_for('gabarito',user=user))   
+    return render_template('q.html',btn=btn,aluno=aluno,indice=indice,result=result)
 
               
     
+#Pagina de Resposta
+@app.route("/gabarito/<user>",methods=['GET','POST'])
+def gabarito(user): 
+    res = get_respostas(user)    
+            
+      
+    if request.method == 'POST':  
+        s = get_notas(user)
+        for i in s:
+            soma = i    
+             
+        
+        return redirect(url_for('notas',user=user,soma=soma))                   
+    return render_template('gabarito.html',res=res,user=user)
 
-@app.route("/gabarito/<input>")
-def gabarito(input):
-    
-    cur.execute('SELECT id, enunciado, valor from questoes;')
-    res = cur.fetchmany()
-    valor = [last['valor'] for last in res]
-    valor 
-    print('valor==',valor)
-    print('input==',input)
-    cur.execute("SELECT id FROM questoes where id = id;")
-    indice = cur.fetchmany()
-    if input and valor == True:
-        flash('Resposta CERTA!!!')
-    else:
-        flash('Resposta ERRADA!!!')                
-    return render_template('gabarito.html',res=res,indice=indice,input=input)
+#Pǵina de Apuração de notas
+@app.route("/notas/<user>/<soma>")
+def notas(user,soma):
+    q = get_all_questoes()
+    quant = len(q)
+           
+    return render_template('notas.html',user=user,soma=soma,quant = quant)
 
-
-@app.route("/sobre")
+#Página de Suporte e referência.
+@app.route("/sobre",methods=['GET','POST'])
 def sobre():
+    if request.method == 'POST':
+        nom = request.form['nome']
+        contat = request.form['contato']
+        assu = request.form['assunto']
+        coment = request.form['comentario']
+       
+        
+        return redirect(url_for('sobre'))    
     return render_template('sobre.html')
 
-@app.route("/delete/<indice>",methods=['post'])
-def delete(indice): 
-    cur.execute(f"DELETE FROM questoes where id ='{indice}'")
-    conn.commit() 
-    flash(f"Questão'{indice}'apagada.") 
-    return url_for('delete',indice=indice)
 
+#Rota de Logout
+@app.route('/logout')
+def logout():
+    # remove the username from the session if it's there
+    session.pop('usuario', None)
+    return redirect(url_for('index'))
 
+#Rota de erro de página e Recepção.
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('page_not_found.html'), 404
+    return render_template('page_not_found.html',error=error), 404
 
 
 if __name__=='__main__':

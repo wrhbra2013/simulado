@@ -13,9 +13,9 @@
     <a href="#" onclick="contrast()">Contrast</a>
     <a href="#" onclick="font_mais()">F+</a>
     <a href="#" onclick="font_menos()">F-</a>
-    <nav>           
+    <nav>
         <a class=".logo" href="questoes">SIMULADO PROVA BRASIL
-            
+
         </a>
         <div class="mobile-menu">
             <div class="line1"></div>
@@ -39,63 +39,95 @@
     <p>{{ message }}</p>
     {% endfor %}
 
-
+    <!--Campo de Novas Questoes.-->
     <div class="container">
-    <h1>Cadastrar Novas Questões: </h1>
-        <form action="questoes" method="POST" enctype="multipart/form-data">
-            
+        <h1>Cadastrar Novas Questões: </h1>
+        <form action="" method="POST" enctype="multipart/form-data">
             <div class="form">
-            <label>Titulo</label>
-            <input type="text" id="titulo" name="titulo" value="{{request.form['titulo']}}"/>
+                <label for="competencia">Comptetências BNCC</label>
+
+                <select id="competencia" name="competencia">
+
+                    <option value="Escolha">Escolha</option>
+
+                    <option value="Conhecimento">1.Conhecimento</option>
+                    <option value="Pensamento Cientifico, Critico e Criativo">2.Pensamento Científico, Crítico e
+                        Criativo</option>
+                    <option value="Repertorio Cultural">3.Repertório Cultural</option>
+                    <option value="Comunicação">4.Comunicação</option>
+                    <option value="Cultura Digital">5.Cultura Digital</option>
+                    <option value="Trabalho & Projetod de Vida">6. Trabalho e Projeto de Vida</option>
+                    <option value="Argumentação">7.Argumentação</option>
+                    <option value="Autocinhecimento & Autocuidado">8.Autoconhecimento e Autocuidado</option>
+                    <option value="Empatia & Cooperação">9.Empatia e Cooperação</option>
+                    <option value="Responsabilidade & Cidadania">10.Responsabilidade e Cidadania</option>
+
+                </select>
+
             </div>
-            
             <div class="form">
-           <label>Enunciado</label>
-           <textarea id="enunciado" name="enunciado" rows="10" cols="50"> {{request.form['enunciado']}}</textarea>
+                <label for="titulo">Area do Conhecimento</label>
+                <select id="titulo" name="titulo">
+                    <option value="Escolha">Escolha</option>
+                    <option value="Linguagens">Linguagens</option>
+                    <option value="Matematica">Matematica</option>
+                    <option value="Ciências da Natureza">Ciências da Natureza</option>
+                    <option value="Ciências Humanas">Ciências Humanas</option>
+                </select>
             </div>
-            
+
             <div class="form">
-            <label>Imagem</label>
-            <input type="file" id="imagem" name="imagem" />
+                <label>Enunciado</label>
+                <textarea id="enunciado" name="enunciado" rows="10" cols="50"> {{request.form['enunciado']}}</textarea>
             </div>
-            
-                {% if filename %}
-                <div class="form">
+
+            <div class="form">
+                <label>Imagem</label>
+                <input type="file" id="imagem" name="imagem" />
+            </div>
+
+            {% if filename %}
+            <div class="form">
                 <img class="imagem" src="{{url_for('display',filename=filename)}}">
-                </div>
-                {%endif%}
-                  
-            
-            <div class="form">
-            <label>A</label>
-            <input type="text" id="a" name="a" value="{{request.form['a']}}" />
-             <input type="checkbox" id="valor" name="valor" value="a"/>         
             </div>
-           <div class="form">
-            <label>B</label>
-            <input type="text" id="b" name="b" value="{{request.form['b']}}"/>
-            <input type="checkbox" id="valor" name="valor" value="b"/>  
-            </div>      
-           
-            <div class="form">
-            <label>C</label>
-            <input type="text" id="c" name="c" value="{{request.form['c']}}"/>
-            <input type="checkbox" id="valor" name="valor" value="c"/>  
-            </div>
-            
-            <div class="form">
-             <label>D</label>
-            <input type="text" id="d" name="d" value="{{request.form['d']}}" />
-            <input type="checkbox" id="valor" name="valor" value="d"/>  
-            </div>    
-            
-            
-            <hr>
-            <button type="submit" >Enviar</button>
-            {%if indice%}
-            <button type="submit"  action="{{indice}}"
-            onclick="return confirm('Você tem certeza que deseja DELETAR este registro?')">Deletar</button>
             {%endif%}
+
+
+            <div class="form">
+                <label>A</label>
+                <input type="text" id="a" name="a" value="{{request.form['a']}}" />
+                <br>
+                <label>Resposta</label>
+                <input type="checkbox" id="valor" name="valor" value="a" />
+            </div>
+            <div class="form">
+                <label>B</label>
+                <input type="text" id="b" name="b" value="{{request.form['b']}}" />
+                <br>
+                <label>Resposta</label>
+                <input type="checkbox" id="valor" name="valor" value="b" />
+            </div>
+
+            <div class="form">
+                <label>C</label>
+                <input type="text" id="c" name="c" value="{{request.form['c']}}" />
+                <br>
+                <label>Resposta</label>
+                <input type="checkbox" id="valor" name="valor" value="c" />
+            </div>
+
+            <div class="form">
+                <label>D</label>
+                <input type="text" id="d" name="d" value="{{request.form['d']}}" />
+                <br>
+                <label>Resposta</label>
+                <input type="checkbox" id="valor" name="valor" value="d" />
+            </div>
+
+
+            <hr>
+            <button type="submit">Enviar</button>
+           
         </form>
     </div>
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,73 +10,69 @@
     <link rel="stylesheet" type="text/css" href="/static/padrao.css">
     <title>Provas</title>
 </head>
-<header>
-    <a href="#" onclick="contrast()">Contrast</a>
-    <a href="#" onclick="font_mais()">F+</a>
-    <a href="#" onclick="font_menos()">F-</a>
-    <nav>
-        <a class=".logo" href="q">SIMULADO PROVA BRASIL
-           </img>
-        </a>
-        <div class="mobile-menu">
-            <div class="line1"></div>
-            <div class="line2"></div>
-            <div class="line3"></div>
-        </div>
-        <ul class="nav-list">
-            <li><a href="index">Home</a></li>
-            <li><a href="cadastro">Cadastro</a></li>
-            <li><a href="questoes">Questões</a></li>
-            <li><a href="sobre">Sobre</a></li>
-            <li><a href="/">Sair</a></li>
+<!-- Mensagem -->
+{% for message in get_flashed_messages() %}
+<p>{{ message }}</p>
+{% endfor %}
 
-        </ul>
-    </nav>
-</header>
-<main></main>
 
-<body>
-    <!-- Mensagem -->
-    {% for message in get_flashed_messages() %}
-    <p>{{ message }}</p>
-    {% endfor %}
-
-          <h2>Questão{{btn}}</h2>                                          
-
-    <div class="indice">
-    <form action="gabarito" method="post">
-    {%for result in result%}   
-     <h2>{{result['titulo']}}</h2>
-     <h2>{{result['enunciado']}}</h2>     
+<!--O Macete desta apliacação esta no fato de casar Jinja output do flask
+    com tag input em css hide para obter registros para banco de dasos.-->
    
-         <div class="form">
-            <img class="imagem" src="{{url_for('display',filename=result['imagem'])}}">
-         </div>
-         <div class="form">
-          <input type="radio" id="a" name="questao"  value="a" />
-         <label for="A">(A) {{result['a']}}</label>
-         </div>
-         <div class="form">
-          <input type="radio" id="b" name="questao" value="b" />
-         <label for="B">(B) {{result['b']}}</label>
-         </div>
-         <div class="form">
-         <input type="radio" id="c" name="questao" value="c" />
-         <label for="C">(C) {{result['c']}}</label>
-         </div>
-         <div class="form">
-         <input type="radio" id="d" name="questao" value="d" />
-         <label for="D">(D) {{result['d']}}</label>
-         </div>
-          <hr>   
-          <button id="gabarito" type="submit"> Enviar </button> 
-     </form>
-        {%endfor%}
+
+<h2>Questão{{btn}}</h2>
+<!--Identificação de Estudante-->
+<form action="" method="POST">
+    {%for aluno in aluno%}     
+    <input type="text" class="hide" id="estudante_escola" name="estudante_escola" value="{{aluno['inst']}}" />
+    <input type="text" class="hide" id="estudante_nome" name="estudante_nome" value="{{aluno['nome']}}" />
+    {%endfor%}
+
+    <!--Campo de apresentação das questões.-->
+    {%for result in result%}
+    <input type="text" class="hide" id="questao_id" name="questao_id" value="{{result['id']}}" />
+    <h2>{{result['competencia']}}</h2>
+    <h2>{{result['titulo']}}</h2>
+    <h2>{{result['enunciado']}}</h2>
+
+    <!--Saidas para banco de dados, aproveitando loop for.-->
+    <input type="text" class="hide" id="questao_enunciado" name="questao_enunciado" value="{{result['enunciado']}}" />
+    <input type="text" class="hide" id="questao_valor" name="questao_valor" value="{{result['valor']}}" />
+
+    <div class="form">
+        <img class="imagem" src="{{url_for('display',filename=result['imagem'])}}"
+            onerror="this.style.display = 'none';">
     </div>
-    
-    <script src="/static/js/acessibilidade.js"></script>
-    <script src="/static/js/style.js"></script>
-    <script srcc="/static/js/control.js"></script>
-        
+    <div class="form">
+        <input type="radio" id="input_estudante" name="input_estudante" value="a" />
+        <label for="A">(A) {{result['a']}}</label>
+    </div>
+    <div class="form">
+        <input type="radio" id="input_estudante" name="input_estudante" value="b" />
+        <label for="B">(B) {{result['b']}}</label>
+    </div>
+    <div class="form">
+        <input type="radio" id="input_estudante" name="input_estudante" value="c" />
+        <label for="C">(C) {{result['c']}}</label>
+    </div>
+    <div class="form">
+        <input type="radio" id="input_estudante" name="input_estudante" value="d" />
+        <label for="D">(D) {{result['d']}}</label>
+    </div>
+    <hr>
+    <button type="submit" id="gabarito" onclick="confirm('REGISTRAR Resposta?!!')">Enviar</button>
+
+</form>
+
+{%endfor%}
+
+
+
+
+<script src="/static/js/acessibilidade.js"></script>
+<script src="/static/js/style.js"></script>
+<script src="/static/js/control.js"></script>
+
 </body>
+
 </html>

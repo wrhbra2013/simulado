@@ -21,12 +21,11 @@ body{
  }
  /* Input e label na mesma linha.*/
   .form{
-        margin: 10px auto; 
-                        
+    margin: 10px auto;                         
     }
-input{
+/*input{
    width: 250px;
-}
+}*/
 
  textarea {
         padding: 1px;
@@ -36,7 +35,8 @@ input{
     
   }
 .imagem{
-    width: 200px auto;
+    
+    width: 300px auto;
     height: 200px;
       
 } 
@@ -58,9 +58,27 @@ h2{
     color: rosybrown;
 }
 
-table,tbody{       
-    display: inline;
+table{
+    border: 0px solid;
+    text-align: center;
+    background-color:rgb(247, 236, 183);   
+    color: black;
 }
+th{
+    border: 1px solid;
+
+}
+td{
+    border: 1px solid;
+}
+
+.discreto{
+    margin: 50px auto;
+    
+
+}
+ 
+  
 .indice{
     max-width: 500px;
     margin:20px auto;
@@ -68,6 +86,19 @@ table,tbody{
     border: 1px solid black;
     border-radius: 30px;
     text-align: center;
+}
+/* for hide display: none*, for show display:block;*/    
+.hide{    
+     display: none;
+      
+}  
+
+iframe{
+    margin: 20px auto;
+    width: 500px;
+    height: 600px;
+    border: 0px;
+    display: block;
 }
 
 /* Elementos do Menu Nav Bar*/
@@ -197,4 +228,6 @@ main{
     transform: rotate(45deg) translate(-5px, -7px);
     
 }
+
+
 

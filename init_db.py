@@ -4,7 +4,10 @@ import psycopg2.extras
 
 #Configurar Banco de Dados Postgresql
 def conexao():
-    conn = psycopg2.connect(dbname="postgres", user="postgres", password="postgres", host="localhost",port="5432")
+    #Conexão Local
+    # conn = psycopg2.connect(dbname="postgres", user="postgres", password="postgres", host="localhost",port="5432")
+    #Conexão railway
+    conn = psycopg2.connect("postgresql://postgres:RatcGkjPcIUg0QT17nsA@containers-us-west-75.railway.app:6160/railway")
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     return conn, cur
 conn, cur = conexao()

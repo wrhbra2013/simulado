@@ -10,6 +10,12 @@ const btn = document.querySelector('#btn');
 btn.addEventListener('click', function list(){   
      btn.value = innerHTML;
     //btn.innerHTML = value();
+  if (btn.style.display == "block") {
+       btn.style.display == "none";    
+  } else {
+    btn.style.display == "block"    
+  }
+
 
 })
 

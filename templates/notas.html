@@ -11,15 +11,43 @@
 
 <body>
    <h2 style="display:block;">RESULTADO FINAL.</2>
-   {%if user, soma, quant%}
-    <div class="indice">
-        <!--Notas-->        
-        <h2 style="font-size: 20px;"> ESTUDANTE: {{user}}</h2>
-        <h2 style="font-size: 20px;"> QUESTÕES CERTAS: {{soma}}</h2>
-        <h2 style="font-size: 20px;"> TOTAL DE QUESTÕES: {{quant}}</h2>
+  
+    <div >       
+        
+        <table>
+            {%if soma, quant, user%}
+                       
+            <tr>
+                <th>Questoes Certas:</th>
+           
+                <td>{{soma}}</td>
+            
+                <th> Total de Questões:</th>
+           
+                <td>{{quant}}</td>
+            </tr>
+            {%endif%}
+            <tr>               
+                <th>Questão</th>
+                <th>Enunciado</th>
+                <th>Nota</th>
+                <th>Registro</th>
+            </tr>
+            {%for resp in resp%}
+            <tr>
+                <td>{{resp['questao_id']}}</td>
+                <td>{{resp['questao_enunciado']}}</td>
+                <td>{{resp['nota']}}</td>
+                <td>{{resp['last_update']}}</td>
+            </tr>
+            {%endfor%}
+ 
+        </table>
+
+       
 
      </div>  
-     {%endif%}
+     
 
    
     

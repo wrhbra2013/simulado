@@ -64,6 +64,7 @@ def get_notas(quem):
     quem = cur.fetchone()
     return quem
 
+
 #Funções insert into
 #Cadastro de alunos.
 def post_aluno(escola,user,ano):
@@ -217,7 +218,7 @@ def home(user):
 def q(user,btn):
     #Encontrar aluno
     aluno = get_aluno(user)
-    
+        
     #Busca por questão
     result = get_questoes(btn)
     
@@ -264,11 +265,13 @@ def q(user,btn):
 #Pagina de Resposta
 @app.route("/gabarito/<user>",methods=['GET','POST'])
 def gabarito(user): 
-    res = get_respostas(user)    
+    res = get_respostas(user)  
             
       
-    if request.method == 'POST':  
+    if request.method == 'POST': 
+        #Notas Por aluno 
         s = get_notas(user)
+        #Filtro do dicionário
         for i in s:
             soma = i    
              
@@ -279,10 +282,13 @@ def gabarito(user):
 #Pǵina de Apuração de notas
 @app.route("/notas/<user>/<soma>")
 def notas(user,soma):
+    #Quantidade de questões
     q = get_all_questoes()
+   #filtro do dicionário
     quant = len(q)
-           
-    return render_template('notas.html',user=user,soma=soma,quant = quant)
+    #
+    resp = get_respostas(user)         
+    return render_template('notas.html',user=user,soma=soma,quant=quant,resp=resp)
 
 #Página de Suporte e referência.
 @app.route("/sobre",methods=['GET','POST'])
@@ -292,7 +298,7 @@ def sobre():
         contat = request.form['contato']
         assu = request.form['assunto']
         coment = request.form['comentario']
-       
+        post_comentarios(nom,contat,assu,coment)
         
         return redirect(url_for('sobre'))    
     return render_template('sobre.html')

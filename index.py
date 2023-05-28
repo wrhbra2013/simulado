@@ -72,8 +72,8 @@ def get_notas(quem):
 #Funções insert into
 #Cadastro de alunos.
 
-def post_aluno(escola,user,lugar,ano):
-    cur.execute(f"INSERT INTO estudante(inst, nome, cidade, serie) VALUES ('{escola}','{user}','{lugar}','{ano}');")
+def post_aluno(escola,user,ano):
+    cur.execute(f"INSERT INTO estudante(inst, nome, cidade, serie) VALUES ('{escola}','{user}','{ano}');")
     post_aluno = conn.commit()
     return post_aluno
 
@@ -146,11 +146,10 @@ def cadastro():
         #Recebe dados
         escola = request.form['inst']
         user = request.form['nome']
-        local = request.form['cidade']
         ano = request.form['serie']
         
         #Copia no Banco de Dados
-        post_aluno(escola,user,local,ano)
+        post_aluno(escola,user,ano)
         flash(f"Usuario {user} REGISTRADO com sucesso.!!")
           
         

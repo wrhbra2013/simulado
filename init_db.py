@@ -15,7 +15,7 @@ conn, cur = conexao()
     
 #Mensagem
 try:
-    cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(30) NOT NULL,nome VARCHAR(30) NOT NULL ,cidade VARCHAR(30),serie INT NOT NULL, last_update TIMESTAMP DEFAULT now()::timestamp(0));')
+    cur.execute('CREATE TABLE IF NOT EXISTS estudante (id serial PRIMARY KEY,inst VARCHAR(30) NOT NULL,nome VARCHAR(30) NOT NULL ,serie INT NOT NULL, last_update TIMESTAMP DEFAULT now()::timestamp(0));')
     conn.commit()
           
      

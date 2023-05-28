@@ -46,7 +46,7 @@
             <div class="form">
                 <label for="competencia">Comptetências BNCC</label>
 
-                <select id="competencia" name="competencia">
+                <select id="competencia" name="competencia" >
 
                     <option value="Escolha">Escolha</option>
 
@@ -78,7 +78,7 @@
 
             <div class="form">
                 <label>Enunciado</label>
-                <textarea id="enunciado" name="enunciado" rows="10" cols="50"> {{request.form['enunciado']}}</textarea>
+                <textarea id="enunciado" name="enunciado" rows="10" cols="50" required> {{request.form['enunciado']}}</textarea>
             </div>
 
             <div class="form">

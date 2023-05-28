@@ -108,13 +108,14 @@ app.config['max_content_length'] = 16 * 1024 * 1024
 
 #Pagina Boas Vindas
 @app.route("/",methods=('GET','POST'))
-def boas_vindas():    
+def boas_vindas(): 
+   
     if request.method =='POST':     
         #Recebe dados
         escola = request.form['inst']
         user = request.form['nome']
         ano = request.form['serie']
-        autentica = get_login(escola,user,ano)  
+        autentica = get_login(escola,user,ano)
             
                  
         return autentica
@@ -148,14 +149,11 @@ def cadastro():
         local = request.form['cidade']
         ano = request.form['serie']
         
-        try:
-            #Pesquisar no Banco de Dados
-            post_aluno(escola,user,local,ano)
-            flash(f"Usuario {user} REGISTRADO com sucesso.!!")
-            
-        except Exception as e:
-            print(e)
-            flash('Campos Vazios Ou erro de digitação. Favor digite novamente.')
+        #Copia no Banco de Dados
+        post_aluno(escola,user,local,ano)
+        flash(f"Usuario {user} REGISTRADO com sucesso.!!")
+          
+        
           
     return render_template('cadastro.html')
 

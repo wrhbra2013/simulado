@@ -47,10 +47,11 @@
     {% endfor %}
 
    
-    <div class="indice">
-        <h2>SEQUÊNCIA DE QUESTÕES.</h2>
+    <div class="indice"> 
+        <h2>SEQUÊNCIA DE QUESTÕES.</h2>       
     <form action="" method="post" target="myiframe">
         {%for indice in indice%}
+        
        <button type="submit"  name="btn" value="{{indice['id']}}" >{{indice['id']}}</button>      
        {%endfor%} 
             

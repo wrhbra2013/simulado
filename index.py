@@ -16,8 +16,8 @@ def arq_permitido(filename):
 #Funções de apoio
 #Login
 def get_login(escola,user,ano):    
-    cur.execute(f"SELECT * from estudante where inst LIKE '%{escola}%' and nome LIKE '%{user}%' and serie = '{ano}';")
-    a = cur.fetchall()    
+    cur.execute(f"SELECT * from estudante where inst LIKE '%{escola}%' and nome LIKE '%{user}%' and serie = '{ano}';")       
+    a = cur.fetchall()
     b = len(a)    
     if b == 0:
         flash('Usuario NÃO Encontrado. Digite novamente! Ou Cadastre-se!')
@@ -27,10 +27,13 @@ def get_login(escola,user,ano):
         session['usuario'] = user
         session.permanent = True
         return redirect(url_for('home',user=user))
+        
+
+    
                 
     
     
-   
+
 #Lista de questoes
 def get_all_questoes():
     cur.execute('SELECT id FROM questoes;')
@@ -65,12 +68,14 @@ def get_notas(quem):
     return quem
 
 
+
 #Funções insert into
 #Cadastro de alunos.
-def post_aluno(escola,user,ano):
-     cur.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
-     post_aluno = conn.commit()
-     return post_aluno
+
+def post_aluno(escola,user,lugar,ano):
+    cur.execute(f"INSERT INTO estudante(inst, nome, cidade, serie) VALUES ('{escola}','{user}','{lugar}','{ano}');")
+    post_aluno = conn.commit()
+    return post_aluno
 
 #Registro de respostas
 def post_resposta(escola, nome, id, enunciado, valor, input, pontos):    
@@ -89,6 +94,7 @@ def post_comentarios(nom,contat,assu,coment):
     cur.execute(f"INSERT INTO contato (nome,contato,assunto,comentario) VALUES ('{nom}','{contat}','{assu}','{coment}') ;")
     post_comentarios = conn.commit()
     return post_comentarios
+
     
 
 #Cofigurações do Flask app
@@ -108,7 +114,9 @@ def boas_vindas():
         escola = request.form['inst']
         user = request.form['nome']
         ano = request.form['serie']
-        autentica = get_login(escola,user,ano)
+        autentica = get_login(escola,user,ano)  
+            
+                 
         return autentica
     return render_template('index.html')
 
@@ -123,6 +131,7 @@ def index():
         user = request.form['nome']
         ano = request.form['serie']
         autentica = get_login(escola,user,ano)
+              
         return autentica
         
     return render_template('index.html')
@@ -136,11 +145,12 @@ def cadastro():
         #Recebe dados
         escola = request.form['inst']
         user = request.form['nome']
+        local = request.form['cidade']
         ano = request.form['serie']
         
         try:
             #Pesquisar no Banco de Dados
-            post_aluno(escola,user,ano)
+            post_aluno(escola,user,local,ano)
             flash(f"Usuario {user} REGISTRADO com sucesso.!!")
             
         except Exception as e:

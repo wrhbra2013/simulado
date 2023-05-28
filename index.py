@@ -73,7 +73,7 @@ def get_notas(quem):
 #Cadastro de alunos.
 
 def post_aluno(escola,user,ano):
-    cur.execute(f"INSERT INTO estudante(inst, nome, cidade, serie) VALUES ('{escola}','{user}','{ano}');")
+    cur.execute(f"INSERT INTO estudante(inst, nome, serie) VALUES ('{escola}','{user}','{ano}');")
     post_aluno = conn.commit()
     return post_aluno
 
